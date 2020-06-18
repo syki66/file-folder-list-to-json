@@ -4,7 +4,7 @@ import json
 
 user_input = input("디렉토리 경로를 정확히 입력해주세요 : ")
 
-user_path = user_input # 사용자의 입력으로 바꾸기
+user_path = user_input
 
 json_path = "./test.json" # 이름 변경할수 있도록 하기
 json_data = {}
@@ -71,6 +71,14 @@ def make_json(path_list):
             "type"        : path_type # 폴더인지 파일인지
         })
 
+        # 단순히 커맨드 창에서의 시각효과
+        print(path)
+        print(str( datetime.datetime.fromtimestamp( (os.path.getctime(path)) ) ))
+        print(str( datetime.datetime.fromtimestamp( (os.path.getmtime(path)) ) ))
+        print(str( datetime.datetime.fromtimestamp( (os.path.getatime(path)) ) ))
+        print(path_size)
+        print(path_type)
+
 
 # 결과 보여주고 루트 디렉토리 정보 json으로 넣어주는 함수
 def show_result():
@@ -86,7 +94,7 @@ def show_result():
         
     })
 
-    print(f'위치         : {user_path}')
+    print(f'\n위치         : {user_path}')
     print(f'전체 폴더 수 : {dir_count - 1}') # 루트 폴더를 제외한 폴더 수
     print(f'전체 파일 수 : {file_count}') # 전체 파일 수
     print(f'크기         : {get_size(user_path)}')
@@ -122,3 +130,6 @@ if (os.path.isdir(user_path)):
 
 else:
     print("디렉토리 경로명을 정확히 입력해주세요")
+
+
+input("\n엔터를 누르면 프로그램이 종료됩니다.")
