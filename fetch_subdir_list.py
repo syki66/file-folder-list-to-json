@@ -2,9 +2,11 @@ import os
 import datetime
 import json
 
-user_path = r'' # 사용자의 입력으로 바꾸기
+user_input = input("디렉토리 경로를 정확히 입력해주세요 : ")
 
-json_path = "./test.json"
+user_path = user_input # 사용자의 입력으로 바꾸기
+
+json_path = "./test.json" # 이름 변경할수 있도록 하기
 json_data = {}
 json_data['sub_info'] = []
 json_data['root_info'] = []
@@ -107,9 +109,16 @@ def get_size(path):
     return total_size
 
 
-fetch_sub_things(user_path)
-show_result()
 
-# json 파일 생성
-with open(json_path, 'w', encoding="utf-8") as outfile:
-    json.dump(json_data, outfile, ensure_ascii=False, indent=4)
+
+if (os.path.isdir(user_path)):
+
+    fetch_sub_things(user_path)
+    show_result()
+
+    # json 파일 생성
+    with open(json_path, 'w', encoding="utf-8") as outfile:
+        json.dump(json_data, outfile, ensure_ascii=False, indent=4)
+
+else:
+    print("디렉토리 경로명을 정확히 입력해주세요")
