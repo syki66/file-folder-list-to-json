@@ -1,4 +1,5 @@
 import os
+import datetime
 
 user_path = r'C:\Users\syki66\Desktop\연습용 최상위 디렉토리' # 사용자의 입력으로 바꾸기
 
@@ -31,6 +32,10 @@ def fetch_sub_things(path):
         
         file_count += len(subfile_list) # 파일 수 카운트
 
+        # 파일 폴더 정보 출력
+        print(return_with_info(subfile_list))
+        print(return_with_info(subdir_list))
+
         # 빈 폴더일 경우 디렉토리값을 출력
         if (not subfile_list): # 파일이 없을경우
             print(path)
@@ -43,6 +48,20 @@ def fetch_sub_things(path):
         if (not not subdir_list): # 빈리스트가 아니라면 실행
             for subdir in subdir_list:
                 fetch_sub_things(subdir)
+
+
+# 폴더, 파일 정보 알려주는 함수
+def return_with_info(path_list):
+    info_list = []
+    for path in path_list:
+        create_time = datetime.datetime.fromtimestamp(os.path.getctime(path)) # 만든시간을 타임 스탬프로 출력 후 실제시간으로 변환
+        modify_time = datetime.datetime.fromtimestamp(os.path.getmtime(path)) # 수정시간
+        access_time = datetime.datetime.fromtimestamp(os.path.getatime(path)) # 마지막 엑세스시간
+        file_size = os.path.getsize(path) # 파일크기
+
+        # 튜플을 이용하여 리스트로 리턴
+        info_list.append((path, create_time, modify_time, access_time, file_size))
+    return info_list
 
 
 # 결과 보여주는 함수
